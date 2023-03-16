@@ -5,8 +5,6 @@ import os
 dotenv_path = Path('.env')
 load_dotenv(dotenv_path=dotenv_path)
 
+def get_env_var(var_name:str)->str:
 
-#API PARAMETERS
-USER_EMAIL = os.environ['USER_EMAIL']
-PASSWORD = os.environ['PASSWORD']
-API_HOST = 'https://smae-api.appcivico.com/'
+    return os.environ[var_name]
