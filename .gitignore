@@ -1,7 +1,6 @@
 #project-specific ignores
 original_data/
 generated_data/
-config.py
 prototipo.ipynb
 
 # Byte-compiled / optimized / DLL files
