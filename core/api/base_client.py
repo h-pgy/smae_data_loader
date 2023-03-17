@@ -35,7 +35,7 @@ class BaseAPI:
 
         if params:
             query_str = self._build_query_string(**params)
-            url+=query_str
+            url+='?' + query_str
         return url
     
     def _build_headers(self, token:str=None)->dict:
