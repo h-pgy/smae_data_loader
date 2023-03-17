@@ -3,9 +3,9 @@ from core.config import PDM_ID
 
 class GetMetas:
 
-    def __init__(self, pdm_id = PDM_ID):
+    def __init__(self, api=None, pdm_id = PDM_ID):
 
-        self.api = API()
+        self.api = api or API()
         self.pdm_id = pdm_id
 
     def __call__(self):

@@ -9,3 +9,7 @@ find_id_iniciativa = FindIdIniciativa()
 from .id_indicador import FindIdIndicador
 
 find_id_indicador = FindIdIndicador()
+
+from .delete_indicador import DeleteIndicadorIfExists
+
+delete_indicador_if_exists = DeleteIndicadorIfExists()

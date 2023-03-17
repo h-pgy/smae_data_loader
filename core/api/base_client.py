@@ -29,9 +29,12 @@ class BaseAPI:
 
         return query_string
 
-    def _build_url(self, endpoint:str, **params)->str:
+    def _build_url(self, endpoint:str, slug:str=None, **params)->str:
         
         url = self.host + endpoint
+
+        if slug:
+            url += f'/{slug}'
 
         if params:
             query_str = self._build_query_string(**params)
@@ -44,23 +47,30 @@ class BaseAPI:
 
         return {'Authorization' : f'Bearer {token}', 'accept' : 'application/json'}
 
-    def get(self, endpoint:str, **query_params)->dict:
+    def get(self, endpoint:str, slug:str=None, **query_params)->dict:
 
-        url = self._build_url(endpoint, **query_params)
+        url = self._build_url(endpoint, slug, **query_params)
 
         with requests.get(url, headers=self.headers) as r:
             return r.json()
 
-    def post(self, endpoint:str, json_body:dict, **query_params)->dict:
+    def post(self, endpoint:str, json_body:dict, slug:str=None, **query_params)->dict:
         
-        url = self._build_url(endpoint, **query_params)
+        url = self._build_url(endpoint, slug, **query_params)
 
         with requests.post(url, headers=self.headers, json=json_body) as r:
             return r.json()
 
-    def patch(self, endpoint:str, json_body:dict, **query_params)->dict:
+    def patch(self, endpoint:str, json_body:dict, slug:str=None, **query_params)->dict:
         
-        url = self._build_url(endpoint, **query_params)
+        url = self._build_url(endpoint, slug, **query_params)
 
         with requests.patch(url, headers=self.headers, json=json_body) as r:
+            return r.json()
+        
+    def delete(self, endpoint:str,slug:str=None, **query_params)->dict:
+        
+        url = self._build_url(endpoint, slug, **query_params)
+
+        with requests.patch(url, headers=self.headers) as r:
             return r.json()

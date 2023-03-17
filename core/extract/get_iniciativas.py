@@ -2,9 +2,9 @@ from core.api import API
 
 class GetIniciativas:
 
-    def __init__(self):
+    def __init__(self, api=None):
 
-        self.api = API()
+        self.api = api or API()
 
     def __call__(self, meta_id:int)->list:
 

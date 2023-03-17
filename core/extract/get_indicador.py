@@ -4,9 +4,9 @@ class GetIndicador:
 
     tipo_busca = {'meta', 'iniciativa'}
 
-    def __init__(self):
+    def __init__(self, api=None):
 
-        self.api = API()
+        self.api = api or API()
 
     def check_param(self, tipo:str)->None:
 
