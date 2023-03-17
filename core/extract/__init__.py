@@ -1,0 +1,1 @@
+from .extract_wb import ExtractWb as ExtractIndicadorData

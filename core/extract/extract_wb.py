@@ -71,10 +71,15 @@ class ExtractWb:
         cod = self.extract_meta_iniciativa_cod(sheet_name)
         is_iniciativa = self.is_iniciativa(cod)
        
-        for row in data:
-            self.add_values(row, cod, is_iniciativa, sheet_name)
+        #to do: add regional data when available
+        parsed = {
+            'sheet_name' : sheet_name,
+            'codigo' : cod,
+            'is_iniciativa' : is_iniciativa,
+            'data' : data,
+        }
         
-        return data
+        return parsed
     
     def extract_sheets(self):
         
@@ -82,7 +87,7 @@ class ExtractWb:
         all_data = []
         for sheet_name in sheets_indicador:
             data = self.extract_sheet(sheet_name)
-            all_data.extend(data)
+            all_data.append(data)
             
         return all_data
     
