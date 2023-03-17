@@ -1,6 +1,6 @@
 from typing import Union
 
-from core.extract import get_metas_api, dados_indicador_gen
+from core.extract import get_metas_api
 
 class FindIdMeta:
 
@@ -32,25 +32,18 @@ class FindIdMeta:
             mapper[codigo_limpo] = meta['id']
             
         return mapper
-    
-    def add_codigo_limpo(self, meta_planilha:dict)->None:
-        
-        cod_original = meta_planilha['codigo']
-        meta_planilha['codigo_limpo'] = self.clean_codigo(cod_original)
 
-    def get_id_sistema(self, meta_planilha:dict)->dict:
+    def get_id_sistema(self, meta_cod:str)->dict:
 
-        self.add_codigo_limpo(meta_planilha)
-
-        codigo_limpo = meta_planilha['codigo_limpo']
+        codigo_limpo = self.clean_codigo(meta_cod)
         id_sistema = self.metas_mapper.get(codigo_limpo, 'nao_encontrado')
 
-        meta_planilha['id_sistema'] = id_sistema
+        return id_sistema
 
     
-    def __call__(self, meta_planilha:dict):
+    def __call__(self, meta_cod:str):
 
-        return self.get_id_sistema(meta_planilha)
+        return self.get_id_sistema(meta_cod)
 
     
     
