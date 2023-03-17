@@ -5,16 +5,11 @@ from typing import Generator
 
 class ExtractAll:
     
-    og_data_folder = ORIGINAL_DATA_FOLDER
     
-    def __init__(self, data_folder:str):
+    def __init__(self, data_folder:str=ORIGINAL_DATA_FOLDER):
         
-        self.data_folder = self.__solve_folder(data_folder)
+        self.data_folder = data_folder
         self.extract_data = ExtractWb()
-        
-    def __solve_folder(self, folder:str)->str:
-        
-        return solve_path(folder, self.og_data_folder)
     
     def __query_files(self, extensions:list, folder:str=None)->list:
         
