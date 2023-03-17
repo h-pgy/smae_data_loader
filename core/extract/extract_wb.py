@@ -6,12 +6,14 @@ import regex as re
 
 
 from core.extract.data import DataExtractor
+from core.extract.metadata_indicador import ExtractMetadata
     
 class ExtractWb:
     
     def __init__(self)->None:
         
         self.extract_data = DataExtractor()
+        self.extract_metadata = ExtractMetadata()
     
     def read_wb(self, path:str)->Workbook:
         
@@ -78,6 +80,9 @@ class ExtractWb:
             'is_iniciativa' : is_iniciativa,
             'data' : data,
         }
+
+        metadata = self.extract_metadata(sheet)
+        parsed.update(metadata)
         
         return parsed
     
