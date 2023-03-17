@@ -27,5 +27,5 @@ def lst_files(folder:str, extensions:list)->list:
     #more performatic
     extensions = set(extensions)
 
-    return [file for file in os.listdir(folder)
+    return [os.path.join(folder, file) for file in os.listdir(folder)
             if get_extension(file) in extensions]
