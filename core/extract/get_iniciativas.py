@@ -1,5 +1,4 @@
 from core.api import API
-from core.config import PDM_ID
 
 class GetIniciativas:
 
