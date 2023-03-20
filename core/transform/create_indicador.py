@@ -81,7 +81,13 @@ class CreateIndicador:
     
     def __call__(self, sheet:dict)->dict:
 
-        return self.create_indicador(sheet)
+        created = self.create_indicador(sheet)
+        id = created.get('id')
+
+        if not id:
+            raise RuntimeError(f'Indicador não criado: {created}')
+        
+        return id
 
 
 
