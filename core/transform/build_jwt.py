@@ -1,6 +1,6 @@
 import jwt
 from time import time
-from config import SESSION_JWT_SECRET
+from core.config import SESSION_JWT_SECRET
 
 class DadosJwt:
 
@@ -26,7 +26,7 @@ class DadosJwt:
             "v": id_variavel,
             "s": tipo_realizado,
             "iat": self.curr_time_epoch(),
-            "exp": self.curr_time_epoch + self.exp
+            "exp": self.curr_time_epoch() + self.exp
             }
         
         return payload
