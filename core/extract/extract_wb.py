@@ -7,6 +7,17 @@ import regex as re
 
 from core.extract.data import DataExtractor
 from core.extract.metadata_indicador import ExtractMetadata
+
+METAS_FILTRAR = {'1', '4', '57', '62'}
+
+def filtrar_metas_iniciativas(codigo:str, is_iniciativa:bool)->bool:
+
+    if is_iniciativa:
+        codigo = codigo.split('.')[0]
+    
+    return codigo in METAS_FILTRAR
+
+    
     
 class ExtractWb:
     
@@ -92,7 +103,9 @@ class ExtractWb:
         all_data = []
         for sheet_name in sheets_indicador:
             data = self.extract_sheet(sheet_name)
-            all_data.append(data)
+            #remover depois, filtro temporario
+            if not filtrar_metas_iniciativas(data['codigo'], data['is_iniciativa']):
+                all_data.append(data)
             
         return all_data
     
