@@ -1,6 +1,11 @@
 from core.api import API
+from core.transform import find_id_iniciativa, find_id_meta
 
 class CreateIndicador:
+
+    #parametros do sistema
+    periodicidades = {'Mensal', 'Bimestral', 'Trimestral', 'Quadrimestral', 'Semestral', 'Anual','Quinquenal', 'Secular'}
+    polaridade = ['Neutra', 'Positiva', 'Negativa']
 
     tipos = {'meta', 'iniciativa'}
 
@@ -25,20 +30,58 @@ class CreateIndicador:
 
         payload.update(id_param)
 
-    def build_payload(self, tipo:str, id:int, ):
+
+    def build_payload(self, tipo:str, id:int, codigo:str, titulo:str)->dict:
 
         payload = {
-            "polaridade": "Neutra",
-            "periodicidade": "Mensal",
-            "codigo": "string",
-            "titulo": "string",
-            "regionalizavel": False,
+            "polaridade": "Neutra", #todos neutros por enquanto
+            "periodicidade": "Mensal", #todos os dados estão sendo coletados mensalmente
+            "codigo": codigo,
+            "titulo": titulo,
+            "regionalizavel": False, #por enquanto vou criar todos como nao regionalizaveis
             "nivel_regionalizacao": 0,
             "inicio_medicao": "2021-01-01",
             "fim_medicao": "2022-12-31",
-            "contexto": "string",
-            "complemento": "string",
-            "casas_decimais": 30
+            "contexto": "",
+            "complemento": "",
+            "casas_decimais": 3
         }
 
         self.add_id_param(payload, tipo, id)
+
+        return payload
+
+    def solve_tipo(self, sheet:dict)->str:
+
+        if sheet['is_iniciativa']:
+            return 'iniciativa'
+        return 'meta'
+    
+    def get_id(self, tipo:str, cod:str)->int:
+
+        if tipo == 'meta':
+            return find_id_meta(cod)
+        return find_id_iniciativa(cod)
+
+    def parse_payload(self, sheet:dict)->dict:
+        
+        titulo = sheet['titulo']
+        codigo = sheet['codigo']
+        tipo = self.solve_tipo(sheet)
+        id = self.get_id(tipo, codigo)
+        payload = self.build_payload(tipo, id, codigo, titulo)
+
+        return payload
+    
+    def create_indicador(self, sheet:dict)->dict:
+
+        payload = self.parse_payload(sheet)
+
+        return self.api.post('indicador', json_body=payload)
+    
+    def __call__(self, sheet:dict)->dict:
+
+        return self.create_indicador(sheet)
+
+
+
