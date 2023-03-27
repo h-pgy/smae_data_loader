@@ -1,0 +1,4 @@
+
+
+class InvalidLogin(ValueError):
+    pass
